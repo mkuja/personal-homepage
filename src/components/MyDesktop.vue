@@ -25,33 +25,33 @@ export default {
         {
           text: 'About me', icon: 'folder', id: uuidv4(),
           onDoubleClick: () => {
-            const wId = uuidv4();
+            //const wId = uuidv4();
             this.createWindow({
               text: "About me",
-              id: wId,
-              onCloseWindow: () => {this.removeWindow(wId)}
+              id: this.id,
+              onCloseWindow: () => {this.removeWindow(this.id)}
             })
           },
         },
         {
           text: 'Works', icon: 'folder', id: uuidv4(),
           onDoubleClick: () => {
-            const wId = uuidv4()
+            //const wId = uuidv4()
             this.createWindow({
               text: "Works",
-              id: wId,
-              onCloseWindow: () => {this.removeWindow(wId)}
+              id: this.id,
+              onCloseWindow: () => {this.removeWindow(this.id)}
             })
           },
         },
         {
           text: 'Assets used', icon: 'rst', id: uuidv4(),
           onDoubleClick: () => {
-            const wId = uuidv4()
+            //const wId = uuidv4()
             this.createWindow({
               text: "Assets used",
-              id: wId,
-              onCloseWindow: () => {this.removeWindow(wId)}
+              id: this.id,
+              onCloseWindow: () => {this.removeWindow(this.id)}
             })
           },
         },
