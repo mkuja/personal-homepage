@@ -25,33 +25,33 @@ export default {
         {
           text: 'About me', icon: 'folder', id: uuidv4(),
           onDoubleClick: () => {
-            let id = uuidv4();
+            const wId = uuidv4();
             this.createWindow({
               text: "About me",
-              id: id,
-              onCloseWindow: () => {this.removeWindow(id)}
+              id: wId,
+              onCloseWindow: () => {this.removeWindow(wId)}
             })
           },
         },
         {
           text: 'Works', icon: 'folder', id: uuidv4(),
           onDoubleClick: () => {
-            let id = uuidv4()
+            const wId = uuidv4()
             this.createWindow({
               text: "Works",
-              id: id,
-              onCloseWindow: () => {this.removeWindow(id)}
+              id: wId,
+              onCloseWindow: () => {this.removeWindow(wId)}
             })
           },
         },
         {
           text: 'Assets used', icon: 'rst', id: uuidv4(),
           onDoubleClick: () => {
-            let id = uuidv4()
+            const wId = uuidv4()
             this.createWindow({
               text: "Assets used",
-              id: id,
-              onCloseWindow: () => {this.removeWindow(id)}
+              id: wId,
+              onCloseWindow: () => {this.removeWindow(wId)}
             })
           },
         },
@@ -65,7 +65,6 @@ export default {
     },
     removeWindow(windowId) {
       for (let i = 0; i < this.windows.length; i++) {
-        console.log(windowId);
         if (this.windows[i].id === windowId) {
           this.windows.splice(i, 1);
           break;
