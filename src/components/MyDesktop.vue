@@ -5,6 +5,7 @@
     <FolderWindow v-for="window in this.windows"
                   v-bind:key="window.wId"
                   v-bind:w-id="window.wId"
+                  v-bind:minimized="window.minimized"
                   v-bind:window-name="window.text"
                   v-bind:onCloseWindow="window.onCloseWindow"
     ></FolderWindow>
@@ -16,7 +17,7 @@
 <script>
 import DesktopIcons from "@/components/MyDestop/DesktopIcons";
 import FolderWindow from "@/components/FolderWindow";
-import {ref} from "vue";
+import { reactive, ref} from "vue";
 import {v4 as uuidv4} from "uuid";
 import MyMenuBar from "@/components/MyMenuBar";
 
@@ -32,11 +33,14 @@ export default {
             const wId = uuidv4();
             this.createWindow({
               icon: this.icon,
-              mbId: uuidv4(),
               text: "About me",
+              minimized: false,
               wId: wId,
               onCloseWindow: () => {
                 this.removeWindow(wId)
+              },
+              onMinimizeWindow: (id) => {
+                this.minimize(id)
               }
             })
           },
@@ -47,11 +51,17 @@ export default {
             const wId = uuidv4()
             this.createWindow({
               icon: this.icon,
-              mbId: uuidv4(),
               text: "Works",
+              minimized: false,
               wId: wId,
               onCloseWindow: () => {
                 this.removeWindow(wId)
+              },
+              // The id is never stored on BarIcons.vue so the only time we can reference it is in the v-for loop
+              // in the barIcons.vue. We are binding the value of wId on v-on:click="app.onMinimizeWindow(app.wId)
+              // for later use. 
+              onMinimizeWindow: (id) => {
+                this.minimize(id)
               }
             })
           },
@@ -62,11 +72,14 @@ export default {
             const wId = uuidv4()
             this.createWindow({
               icon: this.icon,
-              mbId: uuidv4(),
               text: "Assets used",
+              minimized: false,
               wId: wId,
               onCloseWindow: () => {
                 this.removeWindow(wId)
+              },
+              onMinimizeWindow: (id) => {
+                this.minimize(id)
               }
             })
           },
@@ -77,7 +90,19 @@ export default {
   },
   methods: {
     createWindow(window) {
+      window = reactive(window)
       this.windows.push(window)
+    },
+    minimize(id) {
+      console.log("Searching", id)
+      for (let i = 0; i < this.windows.length; i++) {
+        console.log(this.windows[i].wId)
+        if (this.windows[i].wId === id) {
+          console.log("Found")
+          this.windows[i].minimized = !this.windows[i].minimized
+          break;
+        }
+      }
     },
     removeWindow(windowId) {
       for (let i = 0; i < this.windows.length; i++) {
