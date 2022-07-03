@@ -1,5 +1,5 @@
 <template>
-  <div class="container" v-bind:key="$props.id">
+  <div class="container">
     <!--    Top scaling area.-->
     <div class="top-scale grid-item"
          draggable="true"
@@ -14,7 +14,7 @@
          v-on:dragend="onDragEnd"
     >
       <h3>{{ $props.windowName }}</h3>
-      <img v-bind:src="this.ccmButtons" usemap="#controls">
+      <img v-bind:src="this.mmcButtons" usemap="#controls">
       <map name="controls" style="display: none">
         <area shape="circle" coords="8, 32, 13" v-on:click="closeWindow">
         <area shape="circle" coords="32, 32, 13" v-on:click="minimizeWindow">
@@ -49,14 +49,14 @@ export default {
   name: "FolderWindow",
   props: {
     windowName: String(),
-    id: String,
+    wId: String,
     onCloseWindow: Function,
   },
   data() {
     return {
       clientX: -1,
       clientY: -1,
-      ccmButtons: require("../assets/mmc-buttons.png"),
+      mmcButtons: require("../assets/mmc-buttons.png"),
     }
   },
   methods: {
@@ -102,8 +102,8 @@ export default {
       parentEl.style.width = (brect.width + offset) + "px";
     },
     closeWindow() {
-      console.log(this.$props)
-      this.$props.onCloseWindow(this.id)
+      console.log(this.$props.wId)
+      this.$props.onCloseWindow(this.$props.wId)
     },
     minimizeWindow() {
 

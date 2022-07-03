@@ -3,7 +3,8 @@
     <DesktopIcons v-bind:icons-data="icons"
     ></DesktopIcons>
     <FolderWindow v-for="window in this.windows"
-                  v-bind:key="window.id"
+                  v-bind:key="window.wId"
+                  v-bind:w-id="window.wId"
                   v-bind:window-name="window.text"
                   v-bind:onCloseWindow="window.onCloseWindow"
     ></FolderWindow>
@@ -21,41 +22,47 @@ export default {
   components: {DesktopIcons, FolderWindow},
   data() {
     return {
-      icons: ref([
+      icons: [
         {
           text: 'About me', icon: 'folder', id: uuidv4(),
           onDoubleClick: () => {
-            //const wId = uuidv4();
+            const wId = uuidv4();
             this.createWindow({
               text: "About me",
-              id: this.id,
-              onCloseWindow: () => {this.removeWindow(this.id)}
+              wId: wId,
+              onCloseWindow: () => {
+                this.removeWindow(wId)
+              }
             })
           },
         },
         {
           text: 'Works', icon: 'folder', id: uuidv4(),
           onDoubleClick: () => {
-            //const wId = uuidv4()
+            const wId = uuidv4()
             this.createWindow({
               text: "Works",
-              id: this.id,
-              onCloseWindow: () => {this.removeWindow(this.id)}
+              wId: wId,
+              onCloseWindow: () => {
+                this.removeWindow(wId)
+              }
             })
           },
         },
         {
           text: 'Assets used', icon: 'rst', id: uuidv4(),
           onDoubleClick: () => {
-            //const wId = uuidv4()
+            const wId = uuidv4()
             this.createWindow({
               text: "Assets used",
-              id: this.id,
-              onCloseWindow: () => {this.removeWindow(this.id)}
+              wId: wId,
+              onCloseWindow: () => {
+                this.removeWindow(wId)
+              }
             })
           },
         },
-      ]),
+      ],
       windows: ref([]),
     }
   },
@@ -64,14 +71,16 @@ export default {
       this.windows.push(window)
     },
     removeWindow(windowId) {
+      console.log(`Inside removeWindow(): ${windowId}`)
+      console.log(this.windows);
       for (let i = 0; i < this.windows.length; i++) {
-        if (this.windows[i].id === windowId) {
+        if (this.windows[i].wId === windowId) {
           this.windows.splice(i, 1);
           break;
         }
       }
     }
-  }
+  },
 }
 </script>
 
