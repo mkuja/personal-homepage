@@ -14,12 +14,11 @@
          v-on:dragend="onDragEnd"
     >
       <h3>{{ $props.windowName }}</h3>
-      <img v-bind:src="this.mmcButtons" usemap="#controls">
-      <map name="controls" style="display: none">
-        <area shape="circle" coords="8, 32, 13" v-on:click="closeWindow">
-        <area shape="circle" coords="32, 32, 13" v-on:click="minimizeWindow">
-        <area shape="circle" coords="56, 32, 13" v-on:click="maximizeWindow">
-      </map>
+      <div class="control">
+        <img v-bind:src="minimizeImage" v-on:click="this.minimizeWindow">
+        <img v-bind:src="maximizeImage" v-on:click="this.maximizeWindow">
+        <img v-bind:src="closeImage" v-on:click="this.closeWindow">
+      </div>
     </div>
     <!--    Content area -->
     <div class="left-scale grid-item"
@@ -57,6 +56,9 @@ export default {
       clientX: -1,
       clientY: -1,
       mmcButtons: require("../assets/mmc-buttons.png"),
+      closeImage: require("../assets/close.png"),
+      minimizeImage: require("../assets/minimize.png"),
+      maximizeImage: require("../assets/maximise.png"),
     }
   },
   methods: {
@@ -102,16 +104,37 @@ export default {
       parentEl.style.width = (brect.width + offset) + "px";
     },
     closeWindow() {
-      console.log(this.$props.wId)
       this.$props.onCloseWindow(this.$props.wId)
     },
-    minimizeWindow() {
-
+    minimizeWindow(event) {
+      const parentEl = event.target.parentElement.parentElement.parentElement;
+      parentEl.style.display = parentEl.style.display === "none" ? "fixed" : "none";
     },
-    maximizeWindow() {
-
+    maximizeWindow(event) {
+      const parentEl = event.target.parentElement.parentElement.parentElement;
+      if (!this.windowIsMaxized(parentEl)) {
+        this.prevBoundingRect = parentEl.getBoundingClientRect();
+        parentEl.style.left = "0px";
+        parentEl.style.top = "0px";
+        const width = parentEl.parentElement.getBoundingClientRect().width;
+        const height = parentEl.parentElement.getBoundingClientRect().height;
+        parentEl.style.height = `${height}px`;
+        parentEl.style.width = `${width}px`;
+      } else {
+        parentEl.style.left = `${this.prevBoundingRect.left}px`;
+        parentEl.style.top = `${this.prevBoundingRect.top}px`;
+        parentEl.style.height = `${this.prevBoundingRect.height}px`;
+        parentEl.style.width = `${this.prevBoundingRect.width}px`;
+      }
+    },
+    windowIsMaxized(windowElement) {
+      const brect = windowElement.getBoundingClientRect();
+      const width = windowElement.parentElement.getBoundingClientRect().width;
+      const height = windowElement.parentElement.getBoundingClientRect().height;
+      const retval = width === brect.width && height === brect.height && windowElement.offsetTop === 0 && windowElement.offsetLeft === 0;
+      return retval;
     }
-  }
+  },
 }
 </script>
 
@@ -153,12 +176,14 @@ export default {
   grid-area: header;
   align-items: center;
 }
+
 .header img {
   position: relative;
   margin: 0px;
   top: 7px;
   left: -5px;
 }
+
 .header h3 {
   margin: 0px;
   margin-left: 10px;
@@ -191,6 +216,24 @@ export default {
   height: auto;
   z-index: 2;
   grid-area: content;
+}
+
+.control {
+  margin: 0px;
+  padding: 0px;
+  padding-right: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.control img {
+  position: static;
+  width: 22px;
+  height: 22px;
+  margin: 0px;
+  margin-left: 8px;
+  padding: 0px;
 }
 
 </style>

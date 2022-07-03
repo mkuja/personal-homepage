@@ -31,6 +31,7 @@ export default {
 #menu-button img{
   width: auto;
   height: 48px;
+  margin-right: 15px;
 }
 
 </style>

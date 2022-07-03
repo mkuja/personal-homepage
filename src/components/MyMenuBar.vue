@@ -1,15 +1,23 @@
 <template>
 <div class="my-menu-bar">
-  <MyMenu></MyMenu>
+  <MyMenu class="my-menu"></MyMenu>
+  <BarIcons v-bind:apps="$props.apps"></BarIcons>
 </div>
 </template>
 
 <script>
 import MyMenu from "@/components/MyMenuBar/MyMenu";
+import BarIcons from "@/components/MyMenuBar/BarIcons";
 
 export default {
   name: "MyMenuBar",
-  components: {MyMenu},
+  components: {BarIcons, MyMenu},
+  props: {
+    apps: {
+      required: true,
+      type: Object
+    }
+  },
   data() {
 
   },
@@ -32,6 +40,9 @@ export default {
   padding: 0px;
   display: flex;
   background-color: #afb1b3;
+}
+
+.my-menu-bar {
 }
 
 </style>

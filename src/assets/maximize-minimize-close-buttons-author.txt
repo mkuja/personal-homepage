@@ -1,1 +1,3 @@
-<a href="https://www.flaticon.com/free-icons/minimize" title="minimize icons">Minimize icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/close" title="close icons">Close icons created by Alfredo Hernandez - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/maximise" title="maximise icons">Maximise icons created by xnimrodx - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/minimize" title="minimize icons">Minimize icons created by Stockes Design - Flaticon</a>

@@ -9,6 +9,8 @@
                   v-bind:onCloseWindow="window.onCloseWindow"
     ></FolderWindow>
   </div>
+  <MyMenuBar v-bind:apps="windows"
+  ></MyMenuBar>
 </template>
 
 <script>
@@ -16,10 +18,11 @@ import DesktopIcons from "@/components/MyDestop/DesktopIcons";
 import FolderWindow from "@/components/FolderWindow";
 import {ref} from "vue";
 import {v4 as uuidv4} from "uuid";
+import MyMenuBar from "@/components/MyMenuBar";
 
 export default {
   name: "MyDesktop",
-  components: {DesktopIcons, FolderWindow},
+  components: {MyMenuBar, DesktopIcons, FolderWindow},
   data() {
     return {
       icons: [
@@ -28,6 +31,8 @@ export default {
           onDoubleClick: () => {
             const wId = uuidv4();
             this.createWindow({
+              icon: this.icon,
+              mbId: uuidv4(),
               text: "About me",
               wId: wId,
               onCloseWindow: () => {
@@ -41,6 +46,8 @@ export default {
           onDoubleClick: () => {
             const wId = uuidv4()
             this.createWindow({
+              icon: this.icon,
+              mbId: uuidv4(),
               text: "Works",
               wId: wId,
               onCloseWindow: () => {
@@ -54,6 +61,8 @@ export default {
           onDoubleClick: () => {
             const wId = uuidv4()
             this.createWindow({
+              icon: this.icon,
+              mbId: uuidv4(),
               text: "Assets used",
               wId: wId,
               onCloseWindow: () => {
@@ -71,8 +80,6 @@ export default {
       this.windows.push(window)
     },
     removeWindow(windowId) {
-      console.log(`Inside removeWindow(): ${windowId}`)
-      console.log(this.windows);
       for (let i = 0; i < this.windows.length; i++) {
         if (this.windows[i].wId === windowId) {
           this.windows.splice(i, 1);
