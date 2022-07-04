@@ -51,6 +51,7 @@
 <script>
 
 import FolderWindowContent from "@/components/FolderWindow/FolderWindowContent";
+
 export default {
   name: "FolderWindow",
   components: {FolderWindowContent},
@@ -188,6 +189,15 @@ export default {
   z-index: 2;
   grid-area: header;
   align-items: center;
+  cursor: move; /* fallback if grab cursor is unsupported */
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+.header:active {
+  cursor: grabbing;
+  cursor: -moz-grabbing;
+  cursor: -webkit-grabbing;
 }
 
 .header img {

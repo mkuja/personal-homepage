@@ -1,5 +1,5 @@
 <template>
-  <div id="my-desktop">
+  <div id="my-desktop" v-bind:ondragover="onDragOver">
     <DesktopIcons v-bind:icons-data="icons"
     ></DesktopIcons>
     <FolderWindow v-for="window in this.windows"
@@ -37,7 +37,7 @@ export default {
               text: "About me",
               minimized: false,
               wId: wId,
-              content: "assetsRst",
+              content: "introductionRst",
               onCloseWindow: () => {
                 this.removeWindow(wId)
               },
@@ -93,6 +93,10 @@ export default {
     }
   },
   methods: {
+    onDragOver(event) {
+      event.preventDefault();
+      console.log(event);
+    },
     createWindow(window) {
       window = reactive(window)
       this.windows.push(window)

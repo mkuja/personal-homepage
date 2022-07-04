@@ -13,6 +13,7 @@ export default {
     return {
       converter: new Converter(),
       assetsRst: require("../../assets/source/assets.rst"),
+      introductionRst: require("../../assets/source/introduction.rst"),
     }
   },
   props: {
@@ -26,6 +27,8 @@ export default {
       switch (content) {
         case 'assetsRst':
           return this.assetsRst;
+        case 'introductionRst':
+          return this.introductionRst;
         default:
           return false;
       }
@@ -36,6 +39,7 @@ export default {
 
 <style scoped>
 .contenz {
+  text-align: left;
   margin-top: 0px;
   display: block;
   overflow-x: hidden;
