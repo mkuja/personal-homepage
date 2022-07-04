@@ -1,15 +1,18 @@
 <template>
-  <div v-for="app in $props.apps" v-bind:key="app.mbId" class="menu-item-container">
-    <div class="menu-item-icon">
-      <img v-bind:src="getIcon(app.icon)">
+  <template v-for="app in $props.apps" v-bind:key="app.wId">
+    <div class="menu-item-container" v-on:click="app.onMinimizeWindow(app.wId)">
+      <div class="menu-item-icon">
+        <img v-bind:src="getIcon(app.icon)">
+      </div>
+      <div class="menu-item-text">
+        {{ app.text }}
+      </div>
     </div>
-    <div class="menu-item-text">
-      {{ app.text }}
-    </div>
-  </div>
+  </template>
 </template>
 
 <script>
+
 export default {
   name: "BarIcons",
   methods: {

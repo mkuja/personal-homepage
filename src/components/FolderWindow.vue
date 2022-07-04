@@ -1,5 +1,7 @@
 <template>
-  <div class="container">
+  <!-- use v-show because it only hides the elment but does not remove it from the DOM -->
+  <!-- v-if will remove it from the DOM and so the position is no longer maintained -->
+  <div class="container" v-show="!$props.minimized">
     <!--    Top scaling area.-->
     <div class="top-scale grid-item"
          draggable="true"
@@ -50,6 +52,7 @@ export default {
     windowName: String(),
     wId: String,
     onCloseWindow: Function,
+    minimized: Boolean
   },
   data() {
     return {
@@ -60,6 +63,9 @@ export default {
       minimizeImage: require("../assets/minimize.png"),
       maximizeImage: require("../assets/maximise.png"),
     }
+  },
+  mounted() {
+    console.log("Creating ", this.wId)
   },
   methods: {
     onDragStart(event) {
@@ -135,6 +141,11 @@ export default {
       return retval;
     }
   },
+  watch: {
+    minimized() {
+      console.log("Minimized value changed")
+    }
+  }
 }
 </script>
 
