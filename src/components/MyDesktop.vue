@@ -8,6 +8,7 @@
                   v-bind:minimized="window.minimized"
                   v-bind:window-name="window.text"
                   v-bind:onCloseWindow="window.onCloseWindow"
+                  v-bind:content="window.content"
     ></FolderWindow>
   </div>
   <MyMenuBar v-bind:apps="windows"
@@ -17,7 +18,7 @@
 <script>
 import DesktopIcons from "@/components/MyDestop/DesktopIcons";
 import FolderWindow from "@/components/FolderWindow";
-import { reactive, ref} from "vue";
+import {reactive, ref} from "vue";
 import {v4 as uuidv4} from "uuid";
 import MyMenuBar from "@/components/MyMenuBar";
 
@@ -36,6 +37,7 @@ export default {
               text: "About me",
               minimized: false,
               wId: wId,
+              content: "assetsRst",
               onCloseWindow: () => {
                 this.removeWindow(wId)
               },
@@ -54,6 +56,7 @@ export default {
               text: "Works",
               minimized: false,
               wId: wId,
+              content: "assetsRst",
               onCloseWindow: () => {
                 this.removeWindow(wId)
               },
@@ -75,6 +78,7 @@ export default {
               text: "Assets used",
               minimized: false,
               wId: wId,
+              content: "assetsRst",
               onCloseWindow: () => {
                 this.removeWindow(wId)
               },

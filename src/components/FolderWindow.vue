@@ -28,7 +28,11 @@
          v-on:dragstart="onDragStart"
          v-on:dragend="resizeWEEnd"
     ></div>
-    <div class="content grid-item"></div>
+    <div class="content grid-item">
+      <FolderWindowContent
+          v-bind:content="$props.content"
+      ></FolderWindowContent>
+    </div>
     <div class="right-scale grid-item"
          draggable="true"
          v-on:dragstart="onDragStart"
@@ -46,13 +50,16 @@
 
 <script>
 
+import FolderWindowContent from "@/components/FolderWindow/FolderWindowContent";
 export default {
   name: "FolderWindow",
+  components: {FolderWindowContent},
   props: {
     windowName: String(),
     wId: String,
     onCloseWindow: Function,
-    minimized: Boolean
+    minimized: Boolean,
+    content: String,
   },
   data() {
     return {
@@ -150,10 +157,6 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  display: grid;
-
-}
 
 .container {
   display: grid;
@@ -171,7 +174,6 @@ export default {
   box-sizing: border-box;
   z-index: 2;
   width: 400px;
-  height: 300px;
   position: fixed;
   top: 80px;
   left: 80px;
@@ -227,6 +229,7 @@ export default {
   height: auto;
   z-index: 2;
   grid-area: content;
+  overflow: auto;
 }
 
 .control {
