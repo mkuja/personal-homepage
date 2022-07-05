@@ -56,13 +56,24 @@ export default {
                 icon: "rst",
                 id: uuidv4,
                 createsWindow: {
-                  icon: "rst",
                   text: "Lights Out",
                   minimized: false,
                   wId: uuidv4,
                   content: this.lightsOut, // typeof() === 'string'
                 },
-              }]
+              },
+              {
+                text: "Video Convertor",
+                icon: "rst",
+                id: uuidv4,
+                createsWindow: {
+                  text: "Video Convertor",
+                  minimized: false,
+                  wId: uuidv4,
+                  content: this.videoConvertor,
+                }
+              },
+            ]
           }
         },
         {
@@ -97,6 +108,9 @@ export default {
     lightsOut() {
       return require("../assets/source/lights_out.rst");
     },
+    videoConvertor() {
+      return require("../assets/source/video_convertor.rst");
+    },
     onDragOver(event) {
       event.preventDefault();
       console.log(event);
@@ -113,8 +127,6 @@ export default {
       const idx = this.windowLayers.findIndex((elem) => elem === id);
       this.windowLayers.push(this.windowLayers[idx]);
       this.windowLayers.splice(idx, 1);
-
-      //win.style["z-index"] = this.getWindowLayer(id);
     },
     getWindowLayer(id) {
       return 50 + this.windowLayers.findIndex((elem) => id === elem);
@@ -146,7 +158,7 @@ export default {
     },
     isActiveIcon(uuid) {
       return this.activeIcon === uuid;
-    }
+    },
   },
   provide() {
     return {

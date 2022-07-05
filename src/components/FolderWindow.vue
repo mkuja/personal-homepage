@@ -77,7 +77,8 @@ export default {
     return {
       clientX: -1,
       clientY: -1,
-      layer: 2,
+      minWindowHeight: 180,
+      minWindowWidth: 270,
       mmcButtons: require("../assets/mmc-buttons.png"),
       closeImage: require("../assets/close.png"),
       minimizeImage: require("../assets/minimize.png"),
@@ -107,13 +108,17 @@ export default {
       let parentEl = event.target.parentElement;
       parentEl.style.top = inPx;
       let brect = parentEl.getBoundingClientRect();
-      parentEl.style.height = (brect.height - offset) + "px";
+      let height = brect.height - offset;
+      height = height < this.minWindowHeight ? this.minWindowHeight : height;
+      parentEl.style.height = height + "px";
     },
     resizeSNEnd(event) {
       let offset = event.clientY - this.clientY;
       let parentEl = event.target.parentElement;
       let brect = parentEl.getBoundingClientRect();
-      parentEl.style.height = (brect.height + offset) + "px";
+      let height = brect.height + offset;
+      height = height < this.minWindowHeight ? this.minWindowHeight : height;
+      parentEl.style.height = height + "px";
     },
     resizeWEEnd(event) {
       let offset = event.clientX - this.clientX;
@@ -121,13 +126,18 @@ export default {
       let parentEl = event.target.parentElement;
       parentEl.style.left = inPx;
       let brect = parentEl.getBoundingClientRect();
-      parentEl.style.width = (brect.width - offset) + "px";
+      let width = brect.width - offset;
+      width = width < this.minWindowWidth ? this.minWindowWidth : width;
+      parentEl.style.width = width + "px";
     },
     resizeEWEnd(event) {
       let offset = event.clientX - this.clientX;
       let parentEl = event.target.parentElement;
       let brect = parentEl.getBoundingClientRect();
-      parentEl.style.width = (brect.width + offset) + "px";
+      let width = brect.width + offset;
+      width = width < this.minWindowWidth ? this.minWindowWidth : width;
+
+      parentEl.style.width = width + "px";
     },
     closeWindow() {
       this.$props.onCloseWindow(this.$props.wId)
@@ -166,7 +176,7 @@ export default {
       console.log("Minimized value changed")
     },
     windowLayers: {
-      handler: function(newLayers) {
+      handler: function (newLayers) {
         console.log("Window layers changed. Setting z-index.");
         console.log(newLayers);
         const idx = newLayers.findIndex(x => x === this.wId);
@@ -194,7 +204,7 @@ export default {
   border: 1px solid black;
   box-shadow: black 5px 5px 5px;
   box-sizing: border-box;
-  z-index: 2;
+  z-index: 150;
   width: 400px;
   position: fixed;
   top: 80px;
@@ -207,19 +217,14 @@ export default {
   height: 30px;
   background-color: aqua;
   margin: 0px;
-  z-index: 2;
   grid-area: header;
   align-items: center;
   cursor: move; /* fallback if grab cursor is unsupported */
   cursor: grab;
-  cursor: -moz-grab;
-  cursor: -webkit-grab;
 }
 
 .header:active {
   cursor: grabbing;
-  cursor: -moz-grabbing;
-  cursor: -webkit-grabbing;
 }
 
 .header img {
@@ -256,6 +261,9 @@ export default {
 }
 
 .content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   margin: 0px;
   width: 100%;
   height: auto;
