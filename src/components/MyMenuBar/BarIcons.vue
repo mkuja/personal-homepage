@@ -1,6 +1,6 @@
 <template>
   <template v-for="app in $props.apps" v-bind:key="app.wId">
-    <div class="menu-item-container" v-on:click="app.onMinimizeWindow(app.wId)">
+    <div class="menu-item-container" v-on:click="onMinimizeWindow(app.wId)">
       <div class="menu-item-icon">
         <img v-bind:src="getIcon(app.icon)">
       </div>
@@ -36,7 +36,8 @@ export default {
       folderIcon: require("../../assets/folder-icon.png"),
       rstIcon: require("../../assets/rst-icon.png"),
     }
-  }
+  },
+  inject: ["onMinimizeWindow"]
 }
 </script>
 

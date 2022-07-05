@@ -19,7 +19,7 @@
       <div class="control">
         <img v-bind:src="minimizeImage" v-on:click="this.minimizeWindow">
         <img v-bind:src="maximizeImage" v-on:click="this.maximizeWindow">
-        <img v-bind:src="closeImage" v-on:click="this.closeWindow">
+        <img v-bind:src="closeImage" v-on:click="deleteWindow(this.$props.wId)">
       </div>
     </div>
     <!--    Content area -->
@@ -62,6 +62,7 @@ export default {
     minimized: Boolean,
     content: String,
   },
+  inject: ["makeWindow", "minimizeWindow", "deleteWindow"],
   data() {
     return {
       clientX: -1,

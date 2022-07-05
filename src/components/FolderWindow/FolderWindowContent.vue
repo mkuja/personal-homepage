@@ -1,19 +1,26 @@
 <template>
-  <p v-html="converter.makeHtml(this.getContent($props.content))" class="contenz">
+  <p v-if="typeof($props.content) === 'function'"
+     v-html="converter.makeHtml($props.content())"
+     class="contenz">
   </p>
+  <FolderWindowIcons v-else
+                     v-bind:icons-data="$props.content"
+  ></FolderWindowIcons>
+
+
 </template>
 
 <script>
 
 import {Converter} from 'showdown';
+import FolderWindowIcons from "@/components/FolderWindow/FolderWindowIcons";
 
 export default {
   name: "FolderWindowContent",
+  components: {FolderWindowIcons},
   data() {
     return {
       converter: new Converter(),
-      assetsRst: require("../../assets/source/assets.rst"),
-      introductionRst: require("../../assets/source/introduction.rst"),
     }
   },
   props: {
@@ -23,17 +30,7 @@ export default {
     }
   },
   methods: {
-    getContent(content) {
-      switch (content) {
-        case 'assetsRst':
-          return this.assetsRst;
-        case 'introductionRst':
-          return this.introductionRst;
-        default:
-          return false;
-      }
-    }
-  }
+  },
 }
 </script>
 

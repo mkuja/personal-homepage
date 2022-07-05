@@ -1,10 +1,11 @@
 <template>
   <div v-for="icon in $props.iconsData"
-       v-bind:key="icon.id" class="icon"
-       v-on:click="activateIcon(icon.id)"
+       v-bind:key="icon.text + icon.icon"
+       v-on:click="activateIcon(icon.text + icon.icon)"
        v-on:dblclick="makeWindow(icon.createsWindow)"
+       class="icon"
   >
-    <img v-bind:src="getImage(icon.icon)">
+    <img v-bind:src="getImage(icon.icon)" />
     <div v-bind:class="{
         description: true,
         descriptionActive: isActiveIcon(icon.text + icon.icon)}"
@@ -15,16 +16,8 @@
 </template>
 
 <script>
-
 export default {
-  name: "DesktopIcons",
-  data() {
-    return {
-      activeIcon: null,
-    }
-  },
-  computed: {
-  },
+  name: "FolderWindowIcons",
   methods: {
     getImage(iconName) {
       switch (iconName) {
@@ -34,17 +27,11 @@ export default {
           return require("../../assets/folder-icon.png");
       }
     },
-    isActiveIcon(icon) {
-      return this.activeIcon === icon;
-    },
-    activateIcon(icon) {
-      this.activeIcon = icon;
-    },
   },
   props: {
     iconsData: Object,
   },
-  inject: ["makeWindow", "minimizeWindow", "deleteWindow"]
+  inject: ["makeWindow", "minimizeWindow", "deleteWindow", "makeActiveIcon", "isActiveIcon"]
 }
 </script>
 

@@ -1,6 +1,8 @@
 Introduction
 ============
 
+<img src="./my_face.jpg" style="width: 250px;" />
+
 Hello! My name is Mikko Kujala and I'm an aspiring web developer.
 Below are some facts about me.
 
