@@ -31,34 +31,34 @@ export default {
         {
           text: 'About me',
           icon: 'rst',
-          id: uuidv4(),
+          id: uuidv4,
           createsWindow: {
             icon: this.icon,
             text: "About me",
             minimized: false,
-            wId: uuidv4(),
+            wId: uuidv4,
             content: this.introductionRst,
           }
         },
         {
           text: 'Works',
           icon: 'folder',
-          id: uuidv4(),
+          id: uuidv4,
           createsWindow: {
             icon: this.icon,
             text: "Works",
             minimized: false,
-            wId: uuidv4(),
+            wId: uuidv4,
             content: [  // When typeof(content) === 'object', then it's more icons.
               {
                 text: "Lights Out",
                 icon: "rst",
-                id: uuidv4(),
+                id: uuidv4,
                 createsWindow: {
                   icon: "rst",
                   text: "Lights Out",
                   minimized: false,
-                  wId: uuidv4(),
+                  wId: uuidv4,
                   content: this.lightsOut, // typeof() === 'string'
                 },
               }]
@@ -67,7 +67,7 @@ export default {
         {
           text: 'Assets used',
           icon: 'rst',
-          id: uuidv4(),
+          id: uuidv4,
           createsWindow: {
             icon: this.icon,
             text: "Assets used",
@@ -95,9 +95,10 @@ export default {
       event.preventDefault();
       console.log(event);
     },
-    createWindow(window) {
-      window = reactive(window)
-      this.windows.push(window)
+    createWindow(win) {
+      console.log(win)
+      let windo = reactive({...win, wId: win.wId()})
+      this.windows.push(windo)
     },
     minimize(id) {
       console.log("Searching", id)
