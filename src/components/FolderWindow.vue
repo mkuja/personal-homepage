@@ -3,7 +3,7 @@
   <!-- v-if will remove it from the DOM and so the position is no longer maintained -->
   <div class="container"
        v-show="!$props.minimized"
-       v-bind:style="`z-index: ${getWindowLayer($props.wId)};`"
+       ref="win"
        v-on:click="selectWindow($props.wId)"
   >
     <!--    Top scaling area.-->
@@ -66,11 +66,18 @@ export default {
     minimized: Boolean,
     content: String,
   },
-  inject: ["makeWindow", "minimizeWindow", "deleteWindow", "getWindowLayer", "selectWindow"],
+  inject: ["makeWindow",
+    "minimizeWindow",
+    "deleteWindow",
+    "getWindowLayer",
+    "selectWindow",
+    "windowLayers",
+  ],
   data() {
     return {
       clientX: -1,
       clientY: -1,
+      layer: 2,
       mmcButtons: require("../assets/mmc-buttons.png"),
       closeImage: require("../assets/close.png"),
       minimizeImage: require("../assets/minimize.png"),
@@ -157,6 +164,15 @@ export default {
   watch: {
     minimized() {
       console.log("Minimized value changed")
+    },
+    windowLayers: {
+      handler: function(newLayers) {
+        console.log("Window layers changed. Setting z-index.");
+        console.log(newLayers);
+        const idx = newLayers.findIndex(x => x === this.wId);
+        this.$refs.win.style["z-index"] = idx + 50;
+      },
+      deep: true
     }
   }
 }
@@ -199,6 +215,7 @@ export default {
   cursor: -moz-grab;
   cursor: -webkit-grab;
 }
+
 .header:active {
   cursor: grabbing;
   cursor: -moz-grabbing;

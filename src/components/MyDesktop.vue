@@ -2,13 +2,14 @@
   <div id="my-desktop" v-bind:ondragover="onDragOver">
     <DesktopIcons v-bind:icons-data="icons"
     ></DesktopIcons>
-    <FolderWindow v-for="window in this.windows"
+    <FolderWindow v-for="(window, index) in this.windows"
                   v-bind:key="window.wId"
                   v-bind:w-id="window.wId"
                   v-bind:minimized="window.minimized"
                   v-bind:window-name="window.text"
                   v-bind:onCloseWindow="window.onCloseWindow"
                   v-bind:content="window.content"
+                  v-bind:layer="50 + index"
     ></FolderWindow>
   </div>
   <MyMenuBar v-bind:apps="windows"
@@ -78,8 +79,12 @@ export default {
         },
       ],
       windows: ref([]),
-      windowsLayers: ref([]),
+      windowLayers: ref([]),
       activeIcon: ref(String),
+    }
+  },
+  watch: {
+    windows() {
     }
   },
   methods: {
@@ -100,17 +105,19 @@ export default {
       console.log(win);
       let windo = reactive({...win, wId: win.wId()});
       this.windows.push(windo);
-      this.windowsLayers.push(windo.wId);
+      this.windowLayers.push(windo.wId);
     },
     selectWindow(id) {
-      console.log(`Trying to select ${id}...`);
-      const idx = this.windowsLayers.findIndex((elem) => elem === id);
-      console.log(`Selected idx: ${idx}`)
-      this.windowsLayers.push(this.windowsLayers[idx]);
-      this.windowsLayers.splice(idx, 1);
+      console.log("Selecting window...")
+      console.log(this.windowLayers)
+      const idx = this.windowLayers.findIndex((elem) => elem === id);
+      this.windowLayers.push(this.windowLayers[idx]);
+      this.windowLayers.splice(idx, 1);
+
+      //win.style["z-index"] = this.getWindowLayer(id);
     },
     getWindowLayer(id) {
-      return 50 + this.windowsLayers.findIndex((elem) => id === elem);
+      return 50 + this.windowLayers.findIndex((elem) => id === elem);
     },
     minimize(id) {
       console.log("Searching", id)
@@ -130,8 +137,8 @@ export default {
           break;
         }
       }
-      this.windowsLayers.splice(
-          this.windowsLayers.findIndex((elem) => elem === windowId)
+      this.windowLayers.splice(
+          this.windowLayers.findIndex((elem) => elem === windowId)
       );
     },
     makeActiveIcon(uuid) {
@@ -150,7 +157,8 @@ export default {
       isActiveIcon: this.isActiveIcon,
       onMinimizeWindow: this.minimize,
       getWindowLayer: this.getWindowLayer,
-      selectWindow: this.selectWindow
+      selectWindow: this.selectWindow,
+      windowLayers: this.windowLayers
     }
   }
 }
