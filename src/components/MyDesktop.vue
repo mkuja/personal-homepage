@@ -78,6 +78,7 @@ export default {
         },
       ],
       windows: ref([]),
+      windowsLayers: ref([]),
       activeIcon: ref(String),
     }
   },
@@ -96,9 +97,20 @@ export default {
       console.log(event);
     },
     createWindow(win) {
-      console.log(win)
-      let windo = reactive({...win, wId: win.wId()})
-      this.windows.push(windo)
+      console.log(win);
+      let windo = reactive({...win, wId: win.wId()});
+      this.windows.push(windo);
+      this.windowsLayers.push(windo.wId);
+    },
+    selectWindow(id) {
+      console.log(`Trying to select ${id}...`);
+      const idx = this.windowsLayers.findIndex((elem) => elem === id);
+      console.log(`Selected idx: ${idx}`)
+      this.windowsLayers.push(this.windowsLayers[idx]);
+      this.windowsLayers.splice(idx, 1);
+    },
+    getWindowLayer(id) {
+      return 50 + this.windowsLayers.findIndex((elem) => id === elem);
     },
     minimize(id) {
       console.log("Searching", id)
@@ -118,6 +130,9 @@ export default {
           break;
         }
       }
+      this.windowsLayers.splice(
+          this.windowsLayers.findIndex((elem) => elem === windowId)
+      );
     },
     makeActiveIcon(uuid) {
       this.activeIcon = uuid;
@@ -133,7 +148,9 @@ export default {
       deleteWindow: this.removeWindow,
       makeActiveIcon: this.makeActiveIcon,
       isActiveIcon: this.isActiveIcon,
-      onMinimizeWindow: this.minimize
+      onMinimizeWindow: this.minimize,
+      getWindowLayer: this.getWindowLayer,
+      selectWindow: this.selectWindow
     }
   }
 }

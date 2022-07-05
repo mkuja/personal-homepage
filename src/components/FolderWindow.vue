@@ -1,7 +1,11 @@
 <template>
   <!-- use v-show because it only hides the elment but does not remove it from the DOM -->
   <!-- v-if will remove it from the DOM and so the position is no longer maintained -->
-  <div class="container" v-show="!$props.minimized">
+  <div class="container"
+       v-show="!$props.minimized"
+       v-bind:style="`z-index: ${getWindowLayer($props.wId)};`"
+       v-on:click="selectWindow($props.wId)"
+  >
     <!--    Top scaling area.-->
     <div class="top-scale grid-item"
          draggable="true"
@@ -62,7 +66,7 @@ export default {
     minimized: Boolean,
     content: String,
   },
-  inject: ["makeWindow", "minimizeWindow", "deleteWindow"],
+  inject: ["makeWindow", "minimizeWindow", "deleteWindow", "getWindowLayer", "selectWindow"],
   data() {
     return {
       clientX: -1,
