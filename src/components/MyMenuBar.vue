@@ -42,7 +42,4 @@ export default {
   background-color: #afb1b3;
 }
 
-.my-menu-bar {
-}
-
 </style>
