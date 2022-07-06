@@ -21,7 +21,7 @@
     >
       <h3>{{ $props.windowName }}</h3>
       <div class="control">
-        <img v-bind:src="minimizeImage" v-on:click="this.minimizeWindow">
+        <img v-bind:src="minimizeImage" v-on:click="this.minimizeWindow($props.wId)">
         <img v-bind:src="maximizeImage" v-on:click="this.maximizeWindow">
         <img v-bind:src="closeImage" v-on:click="deleteWindow(this.$props.wId)">
       </div>
@@ -138,13 +138,6 @@ export default {
       width = width < this.minWindowWidth ? this.minWindowWidth : width;
 
       parentEl.style.width = width + "px";
-    },
-    closeWindow() {
-      this.$props.onCloseWindow(this.$props.wId)
-    },
-    minimizeWindow(event) {
-      const parentEl = event.target.parentElement.parentElement.parentElement;
-      parentEl.style.display = parentEl.style.display === "none" ? "fixed" : "none";
     },
     maximizeWindow(event) {
       const parentEl = event.target.parentElement.parentElement.parentElement;

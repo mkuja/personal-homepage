@@ -32,7 +32,7 @@ export default {
         {
           text: 'About me',
           icon: 'rst',
-          id: uuidv4,
+          id: uuidv4(),
           createsWindow: {
             icon: this.icon,
             text: "About me",
@@ -44,7 +44,7 @@ export default {
         {
           text: 'Works',
           icon: 'folder',
-          id: uuidv4,
+          id: uuidv4(),
           createsWindow: {
             icon: this.icon,
             text: "Works",
@@ -54,7 +54,7 @@ export default {
               {
                 text: "Lights Out",
                 icon: "rst",
-                id: uuidv4,
+                id: uuidv4(),
                 createsWindow: {
                   text: "Lights Out",
                   minimized: false,
@@ -65,7 +65,7 @@ export default {
               {
                 text: "Video Convertor",
                 icon: "rst",
-                id: uuidv4,
+                id: uuidv4(),
                 createsWindow: {
                   text: "Video Convertor",
                   minimized: false,
@@ -79,7 +79,7 @@ export default {
         {
           text: 'Assets used',
           icon: 'rst',
-          id: uuidv4,
+          id: uuidv4(),
           createsWindow: {
             icon: this.icon,
             text: "Assets used",
@@ -154,9 +154,11 @@ export default {
       );
     },
     makeActiveIcon(uuid) {
+      console.log(`Making icon ${uuid} active..`);
       this.activeIcon = uuid;
     },
     isActiveIcon(uuid) {
+      console.log(`Checking if icon ${uuid} is active..`)
       return this.activeIcon === uuid;
     },
   },

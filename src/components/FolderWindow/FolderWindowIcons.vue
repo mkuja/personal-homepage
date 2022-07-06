@@ -1,14 +1,14 @@
 <template>
   <div v-for="icon in $props.iconsData"
        v-bind:key="icon.text + icon.icon"
-       v-on:click="activateIcon(icon.text + icon.icon)"
+       v-on:click="makeActiveIcon(icon.id)"
        v-on:dblclick="makeWindow(icon.createsWindow)"
        class="icon"
   >
     <img v-bind:src="getImage(icon.icon)" />
     <div v-bind:class="{
         description: true,
-        descriptionActive: isActiveIcon(icon.text + icon.icon)}"
+        descriptionActive: isActiveIcon(icon.id)}"
     >
       {{ icon.text }}
     </div>
