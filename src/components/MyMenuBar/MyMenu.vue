@@ -1,7 +1,17 @@
 <template>
-  <div v-on:mouseover="activateMenu()" v-on:mouseout="deactivateMenu()" id="menu-button">
+  <div v-on:mouseover="hilightMenu()"
+       v-on:mouseout="dehilightMenu()"
+       v-on:click="toggleMenu()"
+       id="menu-button">
     <img v-if="!this.mouseOnMenuButton" src="../../assets/door-inactive.png">
     <img v-else src="../../assets/door-active.png">
+    <div class="menu"
+         ref="rollupMenu"
+         v-show="displayMenu">
+      <div>FUBAR</div>
+      <div>BAFUR</div>
+      <div>VOIVOI</div>
+    </div>
   </div>
 </template>
 
@@ -10,14 +20,18 @@ export default {
   name: "MyMenu",
   data() {
     return {
-      mouseOnMenuButton: false
+      mouseOnMenuButton: false,
+      displayMenu: false,
     }
   },
   methods: {
-    activateMenu() {
+    toggleMenu() {
+      this.displayMenu = !this.displayMenu;
+    },
+    hilightMenu() {
       this.mouseOnMenuButton = true;
     },
-    deactivateMenu() {
+    dehilightMenu() {
       this.mouseOnMenuButton = false;
     }
   }
@@ -28,7 +42,19 @@ export default {
 
 <style scoped>
 
-#menu-button img{
+.menu {
+  position: relative;
+  background-color: #afb1b3;
+  margin: 0px;
+  padding: 10px;
+  bottom: calc(attr(height px) + 50px);
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  box-sizing: border-box;
+}
+
+#menu-button img {
   width: auto;
   height: 48px;
   margin-right: 15px;
