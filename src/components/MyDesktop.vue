@@ -181,7 +181,7 @@ export default {
 <style scoped>
 
 #my-desktop {
-  background: url("~../assets/background.jpeg");
+  background: url("~../assets/background_small.jpeg");
   background-size: contain;
   height: 90vh;
   width: 100%;
