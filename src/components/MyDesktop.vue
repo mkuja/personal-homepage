@@ -198,7 +198,7 @@ export default {
 #my-desktop {
   background: url("~../assets/background_small.jpeg");
   background-size: contain;
-  height: 90vh;
+  height: calc(100vh - 70px);
   width: 100%;
 }
 

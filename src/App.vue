@@ -1,15 +1,25 @@
 <template>
-  <MyDesktop></MyDesktop>
+  <MqResponsive target="desktop">
+    <MyDesktop></MyDesktop>
+  </MqResponsive>
+  <MqResponsive target="mobile">
+    <MobileError></MobileError>
+  </MqResponsive>
 </template>
 
 <script>
 import MyDesktop from "@/components/MyDesktop";
+import MobileError from "@/components/MobileError";
+import {MqResponsive} from "vue3-mq";
 
 export default {
   name: 'App',
   components: {
-    MyDesktop
-  }
+    MobileError,
+    MyDesktop,
+    MqResponsive
+  },
+  inject: ["mq"]
 }
 </script>
 
