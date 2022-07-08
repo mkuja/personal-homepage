@@ -1,19 +1,25 @@
 <template>
-  <div id="my-desktop" v-bind:ondragover="onDragOver">
-    <DesktopIcons v-bind:icons-data="icons"
-    ></DesktopIcons>
-    <FolderWindow v-for="(window, index) in this.windows"
-                  v-bind:key="window.wId"
-                  v-bind:w-id="window.wId"
-                  v-bind:minimized="window.minimized"
-                  v-bind:window-name="window.text"
-                  v-bind:onCloseWindow="window.onCloseWindow"
-                  v-bind:content="window.content"
-                  v-bind:layer="50 + index"
-    ></FolderWindow>
+  <div>
+    <div id="my-desktop" v-bind:ondragover="onDragOver">
+      <DesktopIcons v-bind:icons-data="icons"
+      ></DesktopIcons>
+      <FolderWindow v-for="(window, index) in this.windows"
+                    v-bind:key="window.wId"
+                    v-bind:w-id="window.wId"
+                    v-bind:minimized="window.minimized"
+                    v-bind:window-name="window.text"
+                    v-bind:onCloseWindow="window.onCloseWindow"
+                    v-bind:content="window.content"
+                    v-bind:layer="50 + index"
+      ></FolderWindow>
+    </div>
+    <MyMenuBar v-bind:apps="windows"
+    ></MyMenuBar>
+    <MyMenuRollUp v-on:menuStatus="changeMenuStatus"
+                  v-if="menuStatus"
+                  v-bind:menuItems="icons"
+                  class="relative"></MyMenuRollUp>
   </div>
-  <MyMenuBar v-bind:apps="windows"
-  ></MyMenuBar>
 </template>
 
 <script>
@@ -22,12 +28,15 @@ import FolderWindow from "@/components/FolderWindow";
 import {reactive, ref} from "vue";
 import {v4 as uuidv4} from "uuid";
 import MyMenuBar from "@/components/MyMenuBar";
+import MyMenuRollUp from "@/components/MyMenuBar/MyMenuRollUp";
 
 export default {
   name: "MyDesktop",
-  components: {MyMenuBar, DesktopIcons, FolderWindow},
+  components: {MyMenuRollUp, MyMenuBar, DesktopIcons, FolderWindow},
+
   data() {
     return {
+      menuStatus: false,
       icons: [
         {
           text: 'About me',
@@ -161,6 +170,10 @@ export default {
       console.log(`Checking if icon ${uuid} is active..`)
       return this.activeIcon === uuid;
     },
+    changeMenuStatus(status) {
+      console.log(`Menu status changed: ${status}`);
+      this.menuStatus = status;
+    }
   },
   provide() {
     return {
@@ -172,7 +185,9 @@ export default {
       onMinimizeWindow: this.minimize,
       getWindowLayer: this.getWindowLayer,
       selectWindow: this.selectWindow,
-      windowLayers: this.windowLayers
+      windowLayers: this.windowLayers,
+      menuStatus: this.menuStatus,
+      changeMenuStatus: this.changeMenuStatus
     }
   }
 }
@@ -185,5 +200,9 @@ export default {
   background-size: contain;
   height: 90vh;
   width: 100%;
+}
+
+.relative {
+  position: relative;
 }
 </style>
