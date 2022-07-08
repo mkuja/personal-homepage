@@ -30,6 +30,8 @@ Icons and buttons
 
 [Files and folders icons created by Smashicons - Flaticon](https://www.flaticon.com/free-icons/files-and-folders 'files and folders icons')
 
+[Work-in-progress icons created by Freepik - Flaticon](https://www.flaticon.com/free-icons/work-in-progress) 'work-in-progress icons'
+
 
 
 

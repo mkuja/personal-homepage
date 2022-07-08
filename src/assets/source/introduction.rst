@@ -6,8 +6,6 @@ Introduction
 Hello! My name is Mikko Kujala and I'm an aspiring web developer.
 Below are some facts about me.
 
-- I'm thirty-eight years old.
-- I'm a male.
 - I live in Helsinki, Finland.
 - I recently graduated from Helsinki Business College as datanome. Yep, I want
     to change careers.
